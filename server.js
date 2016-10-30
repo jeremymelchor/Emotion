@@ -9,8 +9,8 @@ let io = require('socket.io')(http);
 let pseudo;
 let listUsers = [];
 
-// To use scripts in html files
-app.use(express.static(__dirname + '/'));
+// To use scripts, css .. in html files
+app.use(express.static(__dirname + '/public'));
 
 // To store sessions values
 app.use(session({
