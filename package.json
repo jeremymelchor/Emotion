@@ -33,7 +33,7 @@
     "express": "4.10.2",
     "socket.io": "1.2.0"
   },
-  "devDependencies": {
+  "Dependencies": {
     "concurrently": "^2.0.0",
     "lite-server": "^2.2.0",
     "typescript": "^2.0.2",
