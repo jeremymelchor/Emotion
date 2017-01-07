@@ -31,9 +31,11 @@
     "jquery": "^2.1.0",
     "nodemon": "^1.10.2",
     "express": "4.10.2",
-    "socket.io": "1.2.0"
+    "socket.io": "1.2.0",
+    "typings":"^1.3.2"
+
   },
-  "Dependencies": {
+  "devDependencies": {
     "concurrently": "^2.0.0",
     "lite-server": "^2.2.0",
     "typescript": "^2.0.2",
