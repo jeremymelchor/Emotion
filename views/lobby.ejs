@@ -7,15 +7,30 @@
 <header>
     <% include ./partials/header %>
 </header>
-
-<div class="row">
-    <div class="col-xs-6 col-md-3">
-        <a href="#" class="thumbnail">
-            <img src="../images/clinton-trump.jpg" alt="Clinton Trump">
-        </a>
-        <a href="#" class="thumbnail">
-            <img src="../images/global-warming.jpg" alt="Global Warming">
-        </a>
+<div class="panel panel-default">
+    <div class="row">
+        <div class="col-sm-6 col-md-6">
+            <div class="thumbnail">
+                <img src="../images/clinton-trump.jpg" alt="Clinton Trump">
+                <div class="caption">
+                    <span>Debate: USA Election</span>
+                    <div>
+                        <button id="debate" type="button" class="btn btn-default btn-primary">Enter</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-6">
+            <div class="thumbnail">
+                <img src="../images/global-warming.jpg" alt="Global Warming">
+                <div class="caption">
+                    <span>Debate: Global Warming</span>
+                    <div>
+                        <button id="gw" type="button" class="btn btn-default btn-primary">Enter</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <footer>
@@ -23,3 +38,20 @@
 </footer>
 </body>
 </html>
+
+<!-- HOME PAGE RETURN SCRIPT -->
+<script>
+    $("#home").click(function () {
+        window.location.href = "http://localhost:3000/lobby/" + <%- pseudo %>
+    });
+
+    $("#gw").click(function () {
+        window.location.href = "http://localhost:3000/lobby/" + <%- pseudo %>
+    });
+
+    $("#debate").click(function () {
+        window.location.href = "http://localhost:3000/lobby/" + <%- pseudo %>
+    });
+</script>
+
+</script>

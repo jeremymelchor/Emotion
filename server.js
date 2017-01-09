@@ -6,8 +6,10 @@ let http = require('http').Server(app);
 let io = require('socket.io')(http);
 
 /** Variables **/
-let pseudo = '';
+let pseudo = null;
 let listUsers = [];
+// rooms which are currently available in chat
+var rooms = ['globalWarming','debat'];
 
 app.set('view engine', 'ejs');
 
@@ -25,7 +27,8 @@ app.use(session({
  * ROUTES*********
  * ***************/
 app.get('/', (req, res) => {
-    res.render('index', pseudo);
+    req.params.pseudo= "";
+    res.render('index',{pseudo: req.params.pseudo});
 });
 
 app.get('/lobby/:pseudo', (req, res) => {
@@ -34,9 +37,8 @@ app.get('/lobby/:pseudo', (req, res) => {
     req.session.pseudo = req.params.pseudo;
 });
 
-app.get('/chat/:pseudo', (req, res) => {
-    pseudo = req.params.pseudo;
-    res.render('chat.ejs', {pseudo: req.params.pseudo});
+app.post('/chat/', (req, res) => {
+    res.render('chat.ejs', );
     req.session.pseudo = req.params.pseudo;
 });
 
@@ -47,10 +49,16 @@ io.on('connection', function (socket) {
 
     console.log("nouveau client : !" + pseudo);
 
+    socket.on('join',function(room) => {
+        // send client to room 1
+        socket.join(room);
+    });
+
     // fired when the server receive a message from a client
     socket.on('chat message', (res) => {
         io.emit('chat message', res);
     });
+
 
     if (pseudo) {
         if (listUsers.includes(pseudo) == false) {
