@@ -27,13 +27,13 @@
     var pseudo = <%- JSON.stringify(pseudo) %>;
 
     $('form').submit(() => {
-        socket.emit('chat message', $('#message').val());
+        socket.emit('chat message', {message: $('#message').val(), pseudo: pseudo});
         $('#message').val('');
         return false;
     });
 
-    socket.on('chat message', function(msg){
-        $('#messages').append($('<li>').text(`${pseudo} ${msg}`));
+    socket.on('chat message', res => {
+        $('#messages').append($('<li>').text(`${res.pseudo} ${res.message}`));
     });
 
     // Fired when the server see someone login in

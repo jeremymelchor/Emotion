@@ -41,8 +41,8 @@ io.on('connection', function(socket) {
     console.log("nouveau client : !" + pseudo);
 
     // fired when the server receive a message from a client
-    socket.on('chat message', (msg) => {
-        io.emit('chat message', msg);
+    socket.on('chat message', (res) => {
+        io.emit('chat message', res);
     });
 
     if (pseudo) {
