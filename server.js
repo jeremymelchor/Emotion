@@ -6,8 +6,10 @@ let http = require('http').Server(app);
 let io = require('socket.io')(http);
 
 /** Variables **/
-let pseudo;
+let pseudo = '';
 let listUsers = [];
+
+app.set('view engine', 'ejs');
 
 // To use scripts, css .. in html files
 app.use(express.static(__dirname + '/public'));
@@ -19,24 +21,29 @@ app.use(session({
     saveUninitialized: true
 }));
 
-http.listen(3000, () => {
-    console.log('Listening on port 3000');
+/** **************
+ * ROUTES*********
+ * ***************/
+app.get('/', (req, res) => {
+    res.render('index', pseudo);
 });
 
-/** ROUTES **/
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+app.get('/lobby/:pseudo', (req, res) => {
+    pseudo = req.params.pseudo;
+    res.render('lobby.ejs', {pseudo: req.params.pseudo});
+    req.session.pseudo = req.params.pseudo;
 });
 
 app.get('/chat/:pseudo', (req, res) => {
     pseudo = req.params.pseudo;
     res.render('chat.ejs', {pseudo: req.params.pseudo});
-    //req.session.pseudo = req.params.pseudo;
+    req.session.pseudo = req.params.pseudo;
 });
 
-/* Event fired when someone connect to the application. Fired only
- when we open a communication way with io() */
-io.on('connection', function(socket) {
+/********************
+ * SOCKET ***********
+ *******************/
+io.on('connection', function (socket) {
 
     console.log("nouveau client : !" + pseudo);
 
@@ -46,7 +53,23 @@ io.on('connection', function(socket) {
     });
 
     if (pseudo) {
-        listUsers.push(pseudo);
+        if (listUsers.includes(pseudo) == false) {
+            listUsers.push(pseudo);
+            console.log(listUsers);
+        }
         io.emit('list users', listUsers);
     }
+    socket.on('disconnect', function () {
+        console.log('A user disconnected');
+        var index = listUsers.indexOf(pseudo);
+        listUsers.splice(index, 1);
+        console.log(listUsers);
+
+    });
+
+});
+
+
+http.listen(3000, () => {
+    console.log('Listening on port 3000');
 });

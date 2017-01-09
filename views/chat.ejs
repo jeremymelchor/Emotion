@@ -1,28 +1,37 @@
 <!doctype html>
 <html>
 <head>
-    <title>chat emotions</title>
-    <link rel="stylesheet" href="/chat.css">
+    <head>
+        <% include ./partials/head %>
+    </head>
+    <link rel="stylesheet" href="/style/chat.css">
 </head>
 
 <body>
+
+<header>
+    <% include ./partials/header %>
+</header>
 
 <ul id="users"></ul>
 
 <ul id="messages"></ul>
 
 <form action="">
-    <input id="message" autocomplete="off"/>
-    <button>Send</button>
+    <div class="input-group">
+        <input id="message" type="text" class="form-control" placeholder="Message" aria-describedby="basic-addon2">
+        <span class="input-group-addon" id="basic-addon2">Send</span>
+    </div>
 </form>
-</body>
 
+
+<footer>
+    <% include ./partials/footer.ejs %>
+</footer>
+
+</body>
 </html>
 
-<script src="/socket.io/socket.io.js"></script>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"
-        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-        crossorigin="anonymous"></script>
 <script>
     var socket = io();
     var pseudo = <%- JSON.stringify(pseudo) %>;

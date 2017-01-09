@@ -1,6 +1,15 @@
-.blue { background: blue }
-.grey { background: grey }
-.chats-row { height: 100vh; }
+.blue {
+    background: blue
+}
+
+.grey {
+    background: grey
+}
+
+.chats-row {
+    height: 100vh;
+}
+
 .chats-row div {
     height: 50%;
     border: 1px solid #ddd;
@@ -13,12 +22,12 @@
     border-bottom: 1px solid #ddd;
 
 }
+
 .list-group-item:first-child {
     border-top: none;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
 }
-
 
 .current-chat {
     height: 100vh;
