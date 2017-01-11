@@ -34,9 +34,9 @@
 
 <script>
     var socket = io();
-    var pseudo = '<%- JSON.stringify(pseudo) %>';
-    console.log(pseudo);
-    var room = '<%- JSON.stringify(room) %>';
+    var pseudo = <%- JSON.stringify(pseudo) %>;
+    var room = <%- JSON.stringify(room) %>;
+    console.log(room);
 
     socket.emit('joinRoom', {room: room , pseudo: pseudo});
 

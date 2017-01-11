@@ -7,9 +7,10 @@ let io = require('socket.io')(http);
 
 /** Variables **/
 let pseudo = null;
-let listUsers = [];
-// rooms which are currently available in chat
-var rooms = ['globalWarming', 'debat'];
+let listUsers = {
+    gw: [],
+    debate: []
+};
 
 app.set('view engine', 'ejs');
 
@@ -55,32 +56,28 @@ io.on('connection', function (socket) {
         console.log(data);
         socket.join(data.room);
         //Tell all those in the room that a new user joined
-        io.in(data.room).emit('user joined', data);
+        io.sockets.in(data.room).emit('user joined', data);
+
+        if (listUsers[data.room].includes(data.pseudo) == false) {
+            listUsers[data.room].push(data.pseudo);
+            console.log('list users: ');
+            console.log(listUsers[data.room]);
+        }
+        io.sockets.in(data.room).emit('list users', listUsers[data.room]);
     });
 
     // fired when the server receive a message from a client
-    socket.on('chat message',  function (data){
-        io.to(data.room).emit('chat message', data);
+    socket.on('chat message', function (data) {
+        io.sockets.in(data.room).emit('chat message', data);
     });
 
-
-    if (pseudo) {
-        if (listUsers.includes(pseudo) == false) {
-            listUsers.push(pseudo);
-            console.log('list users: ');
-            console.log(listUsers);
-        }
-        io.emit('list users', listUsers);
-    }
     socket.on('disconnect', function () {
         console.log('A user disconnected');
-        var index = listUsers.indexOf(pseudo);
-        listUsers.splice(index, 1);
+        //var index = listUsers[data.room].indexOf(pseudo);
+        //listUsers[data.room].splice(index, 1);
         console.log('disconnect: list users:');
         console.log(listUsers);
-
     });
-
 });
 
 
