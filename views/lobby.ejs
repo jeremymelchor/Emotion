@@ -15,7 +15,11 @@
                 <div class="caption">
                     <span>Debate: USA Election</span>
                     <div>
-                        <a href="/chat/debate" id="debate" type="button" class="btn btn-default btn-primary">Participer</a>
+                        <form id="deb" action="/chat/debate" method="POST">
+                            <a href="#" id="debate" type="button" class="btn btn-default btn-primary">Participer</a>
+                            <input type="hidden" name="room" value="debate">
+                            <input type="hidden" name="pseudo" value="<%-pseudo%>">
+                        </form>
                     </div>
                 </div>
             </div>
@@ -26,7 +30,11 @@
                 <div class="caption">
                     <span>Debate: Global Warming</span>
                     <div>
-                        <a href="/chat/gw" id="gw" type="button" class="btn btn-default btn-primary">Participer</a>
+                        <form id="env" action="/chat/gw" method="POST">
+                            <a href="#" id="gw" type="button" class="btn btn-default btn-primary">Participer</a>
+                            <input type="hidden" name="room" value="gw">
+                            <input type="hidden" name="pseudo" value="<%-pseudo%>">
+                        </form>
                     </div>
                 </div>
             </div>
@@ -41,8 +49,12 @@
 
 <!-- HOME PAGE RETURN SCRIPT -->
 <script>
-    $("#home").click(function () {
-        window.location.href = "http://localhost:3000/lobby/" + <%- pseudo %>
+    $("#debate").click(function () {
+        $("#deb").submit();
+    });
+
+    $("#gw").click(function () {
+        $("#env").submit();
     });
 
 </script>

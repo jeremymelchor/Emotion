@@ -4,6 +4,7 @@ let session = require('express-session');
 let app = express();
 let http = require('http').Server(app);
 let io = require('socket.io')(http);
+let bodyParser = require('body-parser');
 
 /** Variables **/
 let pseudo = null;
@@ -16,6 +17,8 @@ app.set('view engine', 'ejs');
 
 // To use scripts, css .. in html files
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 // To store sessions values
 app.use(session({
@@ -33,14 +36,14 @@ app.get('/', (req, res) => {
 });
 
 app.get('/lobby/:pseudo', (req, res) => {
-    console.log(req.params.pseudo);
     pseudo = req.params.pseudo;
     res.render('lobby.ejs', {pseudo: req.params.pseudo});
     req.session.pseudo = req.params.pseudo;
+    console.log(req.session.pseudo);
 });
 
-app.get('/chat/:room', (req, res) => {
-    res.render('chat.ejs', {pseudo: pseudo, room: req.params.room});
+app.post('/chat/*', (req, res) => {
+    res.render('chat.ejs', {pseudo: req.body.pseudo, room: req.body.room});
 });
 
 /********************
@@ -48,12 +51,13 @@ app.get('/chat/:room', (req, res) => {
  *******************/
 io.on('connection', function (socket) {
 
-    console.log("nouveau client : !" + pseudo);
+    //console.log("nouveau client : !" + pseudo);
 
     socket.on('joinRoom', function (data) {
         // send client to room 1
         console.log("joinroom");
         console.log(data);
+
         socket.join(data.room);
         //Tell all those in the room that a new user joined
         io.sockets.in(data.room).emit('user joined', data);
@@ -72,11 +76,11 @@ io.on('connection', function (socket) {
     });
 
     socket.on('disconnect', function () {
-        console.log('A user disconnected');
+        //console.log('A user disconnected');
         //var index = listUsers[data.room].indexOf(pseudo);
         //listUsers[data.room].splice(index, 1);
-        console.log('disconnect: list users:');
-        console.log(listUsers);
+        //console.log('disconnect: list users:');
+        //console.log(listUsers);
     });
 });
 
