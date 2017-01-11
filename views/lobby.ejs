@@ -15,7 +15,7 @@
                 <div class="caption">
                     <span>Debate: USA Election</span>
                     <div>
-                        <button id="debate" type="button" class="btn btn-default btn-primary">Enter</button>
+                        <a href="/chat/debate" id="debate" type="button" class="btn btn-default btn-primary">Participer</a>
                     </div>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                 <div class="caption">
                     <span>Debate: Global Warming</span>
                     <div>
-                        <button id="gw" type="button" class="btn btn-default btn-primary">Enter</button>
+                        <a href="/chat/gw" id="gw" type="button" class="btn btn-default btn-primary">Participer</a>
                     </div>
                 </div>
             </div>
@@ -45,13 +45,6 @@
         window.location.href = "http://localhost:3000/lobby/" + <%- pseudo %>
     });
 
-    $("#gw").click(function () {
-        window.location.href = "http://localhost:3000/lobby/" + <%- pseudo %>
-    });
-
-    $("#debate").click(function () {
-        window.location.href = "http://localhost:3000/lobby/" + <%- pseudo %>
-    });
 </script>
 
 </script>

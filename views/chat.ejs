@@ -34,16 +34,24 @@
 
 <script>
     var socket = io();
-    var pseudo = <%- JSON.stringify(pseudo) %>;
+    var pseudo = '<%- JSON.stringify(pseudo) %>';
+    console.log(pseudo);
+    var room = '<%- JSON.stringify(room) %>';
+
+    socket.emit('joinRoom', {room: room , pseudo: pseudo});
 
     $('form').submit(() => {
-        socket.emit('chat message', {message: $('#message').val(), pseudo: pseudo});
+        socket.to(room).emit('chat message', {message: $('#message').val(), pseudo: pseudo});
         $('#message').val('');
         return false;
     });
 
     socket.on('chat message', res => {
         $('#messages').append($('<li>').text(`${res.pseudo} ${res.message}`));
+    });
+
+    socket.on('user joined', res => {
+        $('#messages').append($('<li>').text(`${res.pseudo} joined !`));
     });
 
     // Fired when the server see someone login in
