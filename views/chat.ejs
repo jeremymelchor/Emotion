@@ -70,7 +70,7 @@
         $('#messages')
             .append($('<span class="' + pseudoDisplayClass + '">')
                 .text(`${res.pseudo}  `).append($('<img src="' + urlEmote + '" alt="emote" style="width:25px;height:25px;">')))
-            .append($('<li class="bubble ' + messageDisplayClass + '">').text(`${res.message}`));
+            .append($('<div class="bubble ' + messageDisplayClass + '">').text(`${res.message}`));
     });
 
     socket.on('user joined', res => {

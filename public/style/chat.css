@@ -79,12 +79,10 @@ body {
 
 .bubble
 {
+    margin: 10px;
+    display: inline-block;
     position: relative;
-    width: 175px;
-    padding: 0px;
-    background: #FFFFFF;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    border: #7F7F7F solid 2px;
+    width: 400px;
+    height: auto;
+    background-color: lightyellow;
 }
