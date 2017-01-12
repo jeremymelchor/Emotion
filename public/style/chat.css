@@ -1,17 +1,62 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font: 13px Helvetica, Arial; }
-form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-/* Messages part */
+body {
+    font: 16px Helvetica, Arial;
+}
+
+/* Barre d'ecriture des messages*/
+#message-block {
+    position: fixed;
+    bottom: 0;
+    padding-left: 15%;
+    padding-right: 20%;
+}
+
+/* Messages Panel 20% a droite et 15% a gauche pour les panel sidebar */
 #messages {
     list-style-type: none;
     padding: 0;
-    margin: 0 0 0 15%;
+    margin: 0 20% 0 15%;
 }
-#messages li { padding: 5px 10px; }
-#messages li:nth-child(odd) { background: #eee; }
+
+/*taille de tous les messages*/
+#messages li {
+    padding: 5px 10px;
+}
+
+/*alternance de fonds sur les messages*/
+#messages li:nth-child(odd) {
+    background: #eee;
+}
+
+/* Affiche les pseudo en plus gros que le reste*/
+.pseudo{
+    font-size: 1.3em;
+}
+
+/* Affiche les pseudo en plus gros que le reste*/
+.pseudo-mine{
+    font-size: 1.3em;
+    float: right;
+}
+
+/* People's messages display*/
+.message-content{
+    margin-top: 0.5%;
+    margin-left: 1%;
+}
+
+/*When it is my message displaying*/
+.message-content-mine{
+    margin-top: 2%;
+    float : right;
+
+}
+
 
 /* Pseudo list of users */
 #users {
@@ -22,13 +67,24 @@ form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 
     overflow-y: scroll;
 }
 
-.colorgraph {
-    height: 5px;
-    border-top: 0;
-    background: #c4e17f;
-    border-radius: 5px;
-    background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
-    background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
-    background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
-    background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+/*right panel*/
+#debate-info-panel{
+    border: 1px solid;
+    height: 100%;
+    width: 20%;
+    float: right;
+    right: 0;
+    position: fixed;
+}
+
+.bubble
+{
+    position: relative;
+    width: 175px;
+    padding: 0px;
+    background: #FFFFFF;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    border: #7F7F7F solid 2px;
 }

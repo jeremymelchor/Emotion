@@ -75,12 +75,17 @@ io.on('connection', function (socket) {
         io.sockets.in(data.room).emit('chat message', data);
     });
 
-    socket.on('disconnect', function () {
-        //console.log('A user disconnected');
-        //var index = listUsers[data.room].indexOf(pseudo);
-        //listUsers[data.room].splice(index, 1);
-        //console.log('disconnect: list users:');
-        //console.log(listUsers);
+    socket.on('disconnection', function(data){
+        var index = listUsers[data.room].indexOf(data.pseudo);
+        listUsers[data.room].splice(index, 1);
+        console.log('disconnect: list users:');
+        console.log(listUsers);
+        io.sockets.in(data.room).emit('list users', listUsers[data.room]);
+        io.sockets.in(data.room).emit('user left', data.pseudo);
+    });
+
+    socket.on('disconnect', function (data) {
+        console.log('A user disconnected');
     });
 });
 

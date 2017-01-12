@@ -14,15 +14,18 @@
 </header>
 
 <ul id="users"></ul>
+<div id="debate-info-panel">zdsfjsdqlfjsdlifsqidjfsdijf</div>
 
 <ul id="messages"></ul>
 
-<form action="">
+<div id="message-block">
     <div class="input-group">
-        <input id="message" type="text" class="form-control" placeholder="Message" aria-describedby="basic-addon2">
-        <span class="input-group-addon" id="basic-addon2">Send</span>
+        <input id="message" type="text" class="form-control" placeholder="Message">
+        <span class="input-group-btn">
+        <button id="send" class="btn btn-default" type="button">Send</button>
+        </span>
     </div>
-</form>
+</div>
 
 
 <footer>
@@ -38,16 +41,36 @@
     var room = <%- JSON.stringify(room) %>;
     console.log(room);
 
-    socket.emit('joinRoom', {room: room , pseudo: pseudo});
+    socket.emit('joinRoom', {room: room, pseudo: pseudo});
 
-    $('form').submit(() => {
-        socket.to(room).emit('chat message', {message: $('#message').val(), pseudo: pseudo});
-        $('#message').val('');
-        return false;
+    $('#send').click(function () {
+        if ($('#message').val() != "") {
+            socket.emit('chat message', {message: $('#message').val(), pseudo: pseudo, room: room});
+            $('#message').val('');
+        }
+    });
+
+    $(document).keypress(function (e) {
+        if (e.which == 13) {
+            $("#send").click();
+        }
     });
 
     socket.on('chat message', res => {
-        $('#messages').append($('<li>').text(`${res.pseudo} ${res.message}`));
+        let urlEmote = randomEmote();
+        //pour le float left ou right du message, on modifie la class CSS qui affiche le message
+        let messageDisplayClass = "message-content";
+        let pseudoDisplayClass = "pseudo";
+
+        /*if (res.pseudo == pseudo) {
+            console.log(res.pseudo);
+            messageDisplayClass = "message-content-mine";
+            pseudoDisplayClass = "pseudo-mine";
+        }*/
+        $('#messages')
+            .append($('<span class="' + pseudoDisplayClass + '">')
+                .text(`${res.pseudo}  `).append($('<img src="' + urlEmote + '" alt="emote" style="width:25px;height:25px;">')))
+            .append($('<li class="bubble ' + messageDisplayClass + '">').text(`${res.message}`));
     });
 
     socket.on('user joined', res => {
@@ -61,5 +84,48 @@
             htmlUserList += `<li> ${user} </li>`;
         $('#users').html(htmlUserList);
     });
-</script>
 
+    socket.on('user left', res => {
+        console.log(res);
+        $('#messages').append($('<li>').text(`${res} left.`));
+    });
+
+    $("#home").click(function () {
+        socket.emit('disconnection', {room: room, pseudo: pseudo});
+        window.location.href = "http://localhost:3000/lobby/<%- pseudo %>"
+    });
+
+    var randomEmote = function () {
+        var url = "";
+        switch (Math.floor(Math.random() * (6 - 1 + 1)) + 1) {
+            case 1:
+                console.log(1);
+                url = "../images/emotes/c-colere.png"
+                break;
+            case 2:
+                console.log(1);
+                url = "../images/emotes/c-content.png"
+                break;
+            case 3:
+                console.log(1);
+                url = "../images/emotes/c-degout.png"
+                break;
+            case 4:
+                console.log(1);
+                url = "../images/emotes/c-peur.png"
+                break;
+            case 5:
+                console.log(1);
+                url = "../images/emotes/c-surprise.png"
+                break;
+            case 6:
+                console.log(1);
+                url = "../images/emotes/c-triste.png"
+                break;
+            default:
+                console.log("default");
+                break;
+        }
+        return url;
+    }
+</script>
