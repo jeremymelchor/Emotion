@@ -9,14 +9,27 @@
 
 <body>
 
-<header>
-    <% include ./partials/header %>
-</header>
+<div>
+    <ul class="nav nav-tabs">
+        <li>
+            <button class="btn btn-lg btn-primary" id="home" href="#"><span class="glyphicon glyphicon-home"
+                                                                            aria-hidden="true"></span> Home
+            </button>
+        </li>
+    </ul>
+    <style>
+        .nav.nav-tabs {
+            margin-bottom: 50px;
+        }
+    </style>
+</div>
 
 <ul id="users"></ul>
 <div id="debate-info-panel">zdsfjsdqlfjsdlifsqidjfsdijf</div>
 
-<ul id="messages"></ul>
+<div id="chatBlock">
+    <ul id="messages"></ul>
+</div>
 
 <div id="message-block">
     <div class="input-group">
@@ -39,7 +52,6 @@
     var socket = io();
     var pseudo = <%- JSON.stringify(pseudo) %>;
     var room = <%- JSON.stringify(room) %>;
-    console.log(room);
 
     socket.emit('joinRoom', {room: room, pseudo: pseudo});
 
@@ -47,30 +59,37 @@
         if ($('#message').val() != "") {
             socket.emit('chat message', {message: $('#message').val(), pseudo: pseudo, room: room});
             $('#message').val('');
+            $("#chatBlock").scrollTop($("#chatBlock")[0].scrollHeight+1000);
         }
     });
 
     $(document).keypress(function (e) {
         if (e.which == 13) {
             $("#send").click();
+            $("#chatBlock").scrollTop($("#chatBlock")[0].scrollHeight+1000);
         }
     });
 
     socket.on('chat message', res => {
+        console.log('chat message');
+        console.log(res.pseudo);
+        console.log(res.message);
         let urlEmote = randomEmote();
         //pour le float left ou right du message, on modifie la class CSS qui affiche le message
         let messageDisplayClass = "message-content";
         let pseudoDisplayClass = "pseudo";
 
-        /*if (res.pseudo == pseudo) {
-            console.log(res.pseudo);
+        if (res.pseudo == pseudo) {
             messageDisplayClass = "message-content-mine";
             pseudoDisplayClass = "pseudo-mine";
-        }*/
+            console.log('MON MESSAGE')
+            console.log("-----------------------\n");
+        }
         $('#messages')
-            .append($('<span class="' + pseudoDisplayClass + '">')
+            .append($('<li class="' + pseudoDisplayClass + '">')
                 .text(`${res.pseudo}  `).append($('<img src="' + urlEmote + '" alt="emote" style="width:25px;height:25px;">')))
-            .append($('<div class="bubble ' + messageDisplayClass + '">').text(`${res.message}`));
+            .append($('<li class="bubble ' + messageDisplayClass + '">').text(`${res.message}`));
+        $("#chatBlock").scrollTop($("#chatBlock")[0].scrollHeight+1000);
     });
 
     socket.on('user joined', res => {
@@ -86,7 +105,7 @@
     });
 
     socket.on('user left', res => {
-        console.log(res);
+        //console.log(res);
         $('#messages').append($('<li>').text(`${res} left.`));
     });
 
@@ -99,27 +118,21 @@
         var url = "";
         switch (Math.floor(Math.random() * (6 - 1 + 1)) + 1) {
             case 1:
-                console.log(1);
                 url = "../images/emotes/c-colere.png"
                 break;
             case 2:
-                console.log(1);
                 url = "../images/emotes/c-content.png"
                 break;
             case 3:
-                console.log(1);
                 url = "../images/emotes/c-degout.png"
                 break;
             case 4:
-                console.log(1);
                 url = "../images/emotes/c-peur.png"
                 break;
             case 5:
-                console.log(1);
                 url = "../images/emotes/c-surprise.png"
                 break;
             case 6:
-                console.log(1);
                 url = "../images/emotes/c-triste.png"
                 break;
             default:

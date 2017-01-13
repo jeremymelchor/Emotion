@@ -20,7 +20,6 @@ body {
 #messages {
     list-style-type: none;
     padding: 0;
-    margin: 0 20% 0 15%;
 }
 
 /*taille de tous les messages*/
@@ -28,35 +27,44 @@ body {
     padding: 5px 10px;
 }
 
-/*alternance de fonds sur les messages*/
-#messages li:nth-child(odd) {
-    background: #eee;
-}
-
 /* Affiche les pseudo en plus gros que le reste*/
 .pseudo{
     font-size: 1.3em;
+    float: left;
+    clear: both;
 }
 
 /* Affiche les pseudo en plus gros que le reste*/
 .pseudo-mine{
     font-size: 1.3em;
     float: right;
+    clear: both;
 }
 
 /* People's messages display*/
 .message-content{
     margin-top: 0.5%;
     margin-left: 1%;
+    float: left;
+    clear: left;
 }
 
 /*When it is my message displaying*/
 .message-content-mine{
     margin-top: 2%;
     float : right;
-
+    clear: both;
 }
 
+#chatBlock{
+    position: fixed;
+    overflow-x:hidden;
+    overflow-y:visible;
+    max-height: 88%;
+    right: 20%;
+    padding-bottom: 135px;
+    left: 15%;
+}
 
 /* Pseudo list of users */
 #users {
@@ -80,9 +88,9 @@ body {
 .bubble
 {
     margin: 10px;
-    display: inline-block;
     position: relative;
     width: 400px;
     height: auto;
     background-color: lightyellow;
 }
+

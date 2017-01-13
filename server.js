@@ -12,6 +12,7 @@ let listUsers = {
     gw: [],
     debate: []
 };
+let port = process.env.PORT || 3000;        // set our port
 
 app.set('view engine', 'ejs');
 
@@ -57,6 +58,7 @@ io.on('connection', function (socket) {
         // send client to room 1
         console.log("joinroom");
         console.log(data);
+        console.log("-----------------------\n");
 
         socket.join(data.room);
         //Tell all those in the room that a new user joined
@@ -66,12 +68,16 @@ io.on('connection', function (socket) {
             listUsers[data.room].push(data.pseudo);
             console.log('list users: ');
             console.log(listUsers[data.room]);
+            console.log("-----------------------\n");
         }
         io.sockets.in(data.room).emit('list users', listUsers[data.room]);
     });
 
     // fired when the server receive a message from a client
     socket.on('chat message', function (data) {
+        console.log('chat message');
+        console.log(data);
+        console.log("-----------------------\n");
         io.sockets.in(data.room).emit('chat message', data);
     });
 
@@ -80,16 +86,18 @@ io.on('connection', function (socket) {
         listUsers[data.room].splice(index, 1);
         console.log('disconnect: list users:');
         console.log(listUsers);
+        console.log("-----------------------\n");
         io.sockets.in(data.room).emit('list users', listUsers[data.room]);
         io.sockets.in(data.room).emit('user left', data.pseudo);
     });
 
     socket.on('disconnect', function (data) {
         console.log('A user disconnected');
+        console.log("-----------------------\n");
     });
 });
 
 
-http.listen(3000, () => {
-    console.log('Listening on port 3000');
+http.listen(port, () => {
+    console.log('Listening on port '+port);
 });
