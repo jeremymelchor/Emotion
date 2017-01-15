@@ -175,11 +175,11 @@
             pseudoDisplayClass = "pseudo-mine";
             console.log('MON MESSAGE')
             console.log("-----------------------\n");
-            $('#messages')
-                .append($('<li class="' + pseudoDisplayClass + '">')
-                    .text(`${res.pseudo}  `).append($('<img src="' + urlEmote + '" alt="emote" style="width:30px;height:30px;">')))
-                .append($('<li class="bubble ' + messageDisplayClass + '">').text(`${res.message}`));
         }
+        $('#messages')
+            .append($('<li class="' + pseudoDisplayClass + '">')
+                .text(`${res.pseudo}  `).append($('<img src="' + urlEmote + '" alt="emote" style="width:30px;height:30px;">')))
+            .append($('<li class="bubble ' + messageDisplayClass + '">').text(`${res.message}`));
 
         $("#chatBlock").scrollTop($("#chatBlock")[0].scrollHeight + 1000);
     });
@@ -219,7 +219,7 @@
      */
     $("#home").click(function () {
         socket.emit('disconnection', {room: room, pseudo: pseudo});
-        window.location.href = "https://ceihm-emotions.herokuapp.com//lobby/<%- pseudo %>"
+        window.location.href = "http://localhost:3000/lobby/<%- pseudo %>"
     });
 
     /**
