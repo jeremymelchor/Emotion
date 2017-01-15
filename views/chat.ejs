@@ -12,19 +12,16 @@
 <div>
     <ul class="nav nav-tabs">
         <li>
-            <button class="btn btn-lg btn-primary" id="home" href="#"><span class="glyphicon glyphicon-home"
-                                                                            aria-hidden="true"></span> Home
+            <button class="btn btn-lg btn-primary" id="home" href="#">
+                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                Home
             </button>
         </li>
     </ul>
-    <style>
-        .nav.nav-tabs {
-            margin-bottom: 50px;
-        }
-    </style>
 </div>
 
 <ul id="users"></ul>
+
 <div id="debate-info-panel">zdsfjsdqlfjsdlifsqidjfsdijf</div>
 
 <div id="chatBlock">
@@ -49,9 +46,9 @@
 </html>
 
 <script>
-    var socket = io();
-    var pseudo = <%- JSON.stringify(pseudo) %>;
-    var room = <%- JSON.stringify(room) %>;
+    let socket = io();
+    let pseudo = <%- JSON.stringify(pseudo) %>;
+    let room = <%- JSON.stringify(room) %>;
 
     socket.emit('joinRoom', {room: room, pseudo: pseudo});
 
@@ -59,14 +56,14 @@
         if ($('#message').val() != "") {
             socket.emit('chat message', {message: $('#message').val(), pseudo: pseudo, room: room});
             $('#message').val('');
-            $("#chatBlock").scrollTop($("#chatBlock")[0].scrollHeight+1000);
+            $("#chatBlock").scrollTop($("#chatBlock")[0].scrollHeight + 1000);
         }
     });
 
     $(document).keypress(function (e) {
         if (e.which == 13) {
             $("#send").click();
-            $("#chatBlock").scrollTop($("#chatBlock")[0].scrollHeight+1000);
+            $("#chatBlock").scrollTop($("#chatBlock")[0].scrollHeight + 1000);
         }
     });
 
@@ -89,7 +86,7 @@
             .append($('<li class="' + pseudoDisplayClass + '">')
                 .text(`${res.pseudo}  `).append($('<img src="' + urlEmote + '" alt="emote" style="width:25px;height:25px;">')))
             .append($('<li class="bubble ' + messageDisplayClass + '">').text(`${res.message}`));
-        $("#chatBlock").scrollTop($("#chatBlock")[0].scrollHeight+1000);
+        $("#chatBlock").scrollTop($("#chatBlock")[0].scrollHeight + 1000);
     });
 
     socket.on('user joined', res => {
@@ -100,7 +97,13 @@
     socket.on('list users', list => {
         let htmlUserList = "";
         for (let user of list)
-            htmlUserList += `<li> ${user} </li>`;
+            htmlUserList += `<li style="margin-top: 5px;margin-left: 5px;">`
+                + `<button type="button" class="btn btn-danger" aria-label="Left Align">`
+                + `<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>`
+                + `</button> ${user}`
+                + `   <img src="` + randomEmote() + `" alt="emote" style="width:25px;height:25px;">`
+                + `   <button id="mute${user}" type="button" class="btn btn-default" data-toggle="button" onclick="muteToggle('${user}');">Mute</button>`
+                + `</li>`;
         $('#users').html(htmlUserList);
     });
 
@@ -114,8 +117,8 @@
         window.location.href = "http://localhost:3000/lobby/<%- pseudo %>"
     });
 
-    var randomEmote = function () {
-        var url = "";
+    let randomEmote = function () {
+        let url = "";
         switch (Math.floor(Math.random() * (6 - 1 + 1)) + 1) {
             case 1:
                 url = "../images/emotes/c-colere.png"
@@ -140,5 +143,13 @@
                 break;
         }
         return url;
+    }
+
+    let muteToggle = function (user) {
+        if ($('#mute' + user).text() == 'Mute') {
+            $('#mute' + user).text('Unmute');
+        } else {
+            $('#mute' + user).text('Mute');
+        }
     }
 </script>
