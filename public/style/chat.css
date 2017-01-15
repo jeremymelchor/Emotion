@@ -49,16 +49,19 @@ html{
 
 /* Affiche les pseudo en plus gros que le reste*/
 .pseudo{
-    font-size: 1.3em;
+    font-size: 1em;
     float: left;
     clear: both;
+    font-weight: bold;
 }
 
 /* Affiche les pseudo en plus gros que le reste*/
 .pseudo-mine{
-    font-size: 1.3em;
+    font-size: 1em;
     float: right;
     clear: both;
+    font-weight: bold;
+
 }
 
 /* People's messages display*/
@@ -109,7 +112,6 @@ html{
 {
     margin: 10px;
     position: relative;
-    width: 400px;
     height: auto;
     background-color: lightyellow;
     -moz-border-radius: 10px;

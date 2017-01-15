@@ -22,7 +22,41 @@
 
 <ul id="users"></ul>
 
-<div id="debate-info-panel">zdsfjsdqlfjsdlifsqidjfsdijf</div>
+<div id="debate-info-panel">
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h4>Feeling Du Débat: </h4>
+            <div class="progress">
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0"
+                     aria-valuemax="100" style="width: 40%">
+                    <span class="sr-only">40% Complete (success)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h4>Emotion Repartition: </h4>
+            <br/>
+            <img src="https://i.imgflip.com/1hpm6g.png" class="img-responsive"/>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="bottom-panel">
+                <h4>Emotion Actuelle:</h4>
+                <img src="" id="current-emote" alt="emote" style="width:50px;height:50px;">
+                <button id="change-emoji" type="button" class="btn btn-danger btn-lg" data-target="#myModal" data-toggle="modal">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 <div id="chatBlock">
     <ul id="messages"></ul>
@@ -42,6 +76,55 @@
     <% include ./partials/footer.ejs %>
 </footer>
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Choisissez votre Emote</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-6 col-md-4">
+                        <a href="#" class="thumbnail">
+                            <img src="../images/emotes/a-colere.png" alt="colere" style="width: 75px; height: 75px;">
+                        </a>
+                    </div>
+                    <div class="col-xs-6 col-md-4">
+                        <a href="#" class="thumbnail">
+                            <img src="../images/emotes/a-content.png" alt="content" style="width: 75px; height: 75px;">
+                        </a>
+                    </div>
+                    <div class="col-xs-6 col-md-4">
+                        <a href="#" class="thumbnail">
+                            <img src="../images/emotes/a-degout.png" alt="degout" style="width: 75px; height: 75px;">
+                        </a>
+                    </div>
+                    <div class="col-xs-6 col-md-4">
+                        <a href="#" class="thumbnail">
+                            <img src="../images/emotes/a-peur.png" alt="peur" style="width: 75px; height: 75px;">
+                        </a>
+                    </div>
+                    <div class="col-xs-6 col-md-4">
+                        <a href="#" class="thumbnail">
+                            <img src="../images/emotes/a-surprise.png" alt="surprise" style="width: 75px; height: 75px;">
+                        </a>
+                    </div>
+                    <div class="col-xs-6 col-md-4">
+                        <a href="#" class="thumbnail">
+                            <img src="../images/emotes/a-triste.png" alt="triste" style="width: 75px; height: 75px;">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
 
@@ -49,17 +132,24 @@
     let socket = io();
     let pseudo = <%- JSON.stringify(pseudo) %>;
     let room = <%- JSON.stringify(room) %>;
+    let emote_to_send;
 
     socket.emit('joinRoom', {room: room, pseudo: pseudo});
 
+    /**
+     * SEND BUTTON
+     */
     $('#send').click(function () {
         if ($('#message').val() != "") {
-            socket.emit('chat message', {message: $('#message').val(), pseudo: pseudo, room: room});
+            socket.emit('chat message', {message: $('#message').val(), pseudo: pseudo, room: room, emote: emote_to_send});
             $('#message').val('');
             $("#chatBlock").scrollTop($("#chatBlock")[0].scrollHeight + 1000);
         }
     });
 
+    /**
+     * PRESS ENTER TO SEND MESSAGE
+     */
     $(document).keypress(function (e) {
         if (e.which == 13) {
             $("#send").click();
@@ -67,11 +157,15 @@
         }
     });
 
+
+    /**
+     * SOCKET
+     */
     socket.on('chat message', res => {
         console.log('chat message');
         console.log(res.pseudo);
         console.log(res.message);
-        let urlEmote = randomEmote();
+        let urlEmote = res.emote;
         //pour le float left ou right du message, on modifie la class CSS qui affiche le message
         let messageDisplayClass = "message-content";
         let pseudoDisplayClass = "pseudo";
@@ -81,11 +175,12 @@
             pseudoDisplayClass = "pseudo-mine";
             console.log('MON MESSAGE')
             console.log("-----------------------\n");
+            $('#messages')
+                .append($('<li class="' + pseudoDisplayClass + '">')
+                    .text(`${res.pseudo}  `).append($('<img src="' + urlEmote + '" alt="emote" style="width:30px;height:30px;">')))
+                .append($('<li class="bubble ' + messageDisplayClass + '">').text(`${res.message}`));
         }
-        $('#messages')
-            .append($('<li class="' + pseudoDisplayClass + '">')
-                .text(`${res.pseudo}  `).append($('<img src="' + urlEmote + '" alt="emote" style="width:25px;height:25px;">')))
-            .append($('<li class="bubble ' + messageDisplayClass + '">').text(`${res.message}`));
+
         $("#chatBlock").scrollTop($("#chatBlock")[0].scrollHeight + 1000);
     });
 
@@ -96,14 +191,21 @@
     // Fired when the server see someone login in
     socket.on('list users', list => {
         let htmlUserList = "";
-        for (let user of list)
-            htmlUserList += `<li style="margin-top: 5px;margin-left: 5px;">`
-                + `<button type="button" class="btn btn-danger" aria-label="Left Align">`
-                + `<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>`
-                + `</button> ${user}`
-                + `   <img src="` + randomEmote() + `" alt="emote" style="width:25px;height:25px;">`
-                + `   <button id="mute${user}" type="button" class="btn btn-default" data-toggle="button" onclick="muteToggle('${user}');">Mute</button>`
-                + `</li>`;
+        for (let user of list) {
+            if (user != pseudo)
+                htmlUserList += `<li style="margin-top: 5px;margin-left: 5px;">`
+                    + `<button type="button" class="btn btn-danger" aria-label="Left Align" data-toggle="tooltip"  title="Signaler">`
+                    + `<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>`
+                    + `</button> ${user}`
+                    + `   <img src="` + randomEmote() + `" alt="emote" style="width:25px;height:25px;">`
+                    + `   <button id="mute${user}" type="button" class="btn btn-default" data-toggle="tooltip"  title="mute/unmute emotion" onclick="muteToggle('${user}');">Mute</button>`
+                    + `</li>`;
+            else
+                htmlUserList += `<li style="margin-top: 5px;margin-left: 5px;">`
+                    + `${user}`
+                    + `   <img src="` + randomEmote() + `" alt="emote" style="width:25px;height:25px;">`
+                    + `</li>`;
+        }
         $('#users').html(htmlUserList);
     });
 
@@ -112,31 +214,37 @@
         $('#messages').append($('<li>').text(`${res} left.`));
     });
 
+    /**
+     * BACK TO LOBBY
+     */
     $("#home").click(function () {
         socket.emit('disconnection', {room: room, pseudo: pseudo});
-        window.location.href = "https://ceihm-emotions.herokuapp.com/lobby/<%- pseudo %>"
+        window.location.href = "https://ceihm-emotions.herokuapp.com//lobby/<%- pseudo %>"
     });
 
+    /**
+     * RANDOM EMOTE URL GENERATOR
+     */
     let randomEmote = function () {
         let url = "";
         switch (Math.floor(Math.random() * (6 - 1 + 1)) + 1) {
             case 1:
-                url = "../images/emotes/c-colere.png"
+                url = "../images/emotes/a-colere.png"
                 break;
             case 2:
-                url = "../images/emotes/c-content.png"
+                url = "../images/emotes/a-content.png"
                 break;
             case 3:
-                url = "../images/emotes/c-degout.png"
+                url = "../images/emotes/a-degout.png"
                 break;
             case 4:
-                url = "../images/emotes/c-peur.png"
+                url = "../images/emotes/a-peur.png"
                 break;
             case 5:
-                url = "../images/emotes/c-surprise.png"
+                url = "../images/emotes/a-surprise.png"
                 break;
             case 6:
-                url = "../images/emotes/c-triste.png"
+                url = "../images/emotes/a-triste.png"
                 break;
             default:
                 console.log("default");
@@ -145,6 +253,9 @@
         return url;
     }
 
+    /**
+     * MUTE ACTION
+     */
     let muteToggle = function (user) {
         if ($('#mute' + user).text() == 'Mute') {
             $('#mute' + user).text('Unmute');
@@ -152,4 +263,38 @@
             $('#mute' + user).text('Mute');
         }
     }
+
+    /**
+     * CURRENT EMOTION RANDOMIZER
+     */
+
+    let countdown = 10;
+    $('#current-emote').attr('src', randomEmote());
+    emote_to_send = $('#current-emote').attr('src');
+
+    $('#message').keypress(function () {
+        if (countdown == 0) {
+            $('#current-emote').attr('src', randomEmote());
+            emote_to_send = $('#current-emote').attr('src');
+            countdown = Math.floor(Math.random() * (20 - 1 + 1) + 1);
+        } else {
+            countdown--;
+        }
+    });
+
+    /**
+     * MODAL OPEN
+     */
+
+    $('#change-emoji').click(function(){
+        $('#myModal').show();
+    });
+
+    $('.modal-body').click(function(e){
+        $('#current-emote').attr('src',$(e.target).attr('src'));
+        $('#myModal').modal('hide')
+        emote_to_send = $(e.target).attr('src');
+    });
+
+
 </script>
