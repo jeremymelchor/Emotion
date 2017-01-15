@@ -7,33 +7,36 @@
 <header>
     <% include ./partials/header %>
 </header>
-<div class="panel panel-default">
+<div class="panel panel-default" style="margin-top: 3%;">
     <div class="row">
         <div class="col-sm-6 col-md-6">
+            <h1 class="text-center">DEBAT N°1</h1>
+
             <div class="thumbnail">
                 <img src="../images/clinton-trump.jpg" alt="Clinton Trump">
                 <div class="caption">
-                    <span>Debate: USA Election</span>
+                    <h3>Pour ou contre ajouter la dimension des émotions dans un débat sur internet ? (dans le cadre de notre projet)</h3>
                     <div>
                         <form id="deb" action="/chat/debate" method="POST">
                             <a href="#" id="debate" type="button" class="btn btn-default btn-primary">Participer</a>
                             <input type="hidden" name="room" value="debate">
-                            <input type="hidden" name="pseudo" value="<%-pseudo%>">
+                            <input type="hidden" name="pseudo" value="<%- pseudo %>">
                         </form>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-sm-6 col-md-6">
-            <div class="thumbnail">
+            <h1 class="text-center">DEBAT N°2</h1>
+            <div class="thumbnail" >
                 <img src="../images/global-warming.jpg" alt="Global Warming">
                 <div class="caption">
-                    <span>Debate: Global Warming</span>
+                    <h3>Est-ce que le remplacement des partiels à Polytech par des contrôles continus est une bonne idée ?</h3>
                     <div>
                         <form id="env" action="/chat/gw" method="POST">
                             <a href="#" id="gw" type="button" class="btn btn-default btn-primary">Participer</a>
                             <input type="hidden" name="room" value="gw">
-                            <input type="hidden" name="pseudo" value="<%-pseudo%>">
+                            <input type="hidden" name="pseudo" value="<%- pseudo %>">
                         </form>
                     </div>
                 </div>
@@ -62,6 +65,6 @@
 <!-- HOME PAGE RETURN SCRIPT -->
 <script>
     $("#home").click(function () {
-        window.location.href = "http://localhost:3000/lobby/<%- pseudo %>"
+        window.location.href = "https://ceihm-emotions.herokuapp.com//lobby/<%- pseudo %>"
     });
 </script>
