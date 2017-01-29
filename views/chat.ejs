@@ -212,7 +212,7 @@
     $("#home").click(function () {
         //Todo: MODAL CONFIRME QUITTER LE CHAT
         socket.emit('disconnection', {room: room, pseudo: pseudo});
-        window.location.href = "http://localhost:3000/lobby/<%- pseudo %>"
+        window.location.href = "http://ceihm-emotions.herokuapp.com/lobby/<%- pseudo %>"
     });
 
     /**

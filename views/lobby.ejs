@@ -31,7 +31,7 @@
             <div class="thumbnail" >
                 <img src="../images/global-warming.jpg" alt="Global Warming">
                 <div class="caption">
-                    <h3>Est-ce que le remplacement des partiels à Polytech par des contrôles continus est une bonne idée ?</h3>
+                    <h3>Vote obligatoire: Pour ou contre ?</h3>
                     <div>
                         <form id="env" action="/chat/gw" method="POST">
                             <a href="#" id="gw" type="button" class="btn btn-default btn-primary">Participer</a>
@@ -65,6 +65,6 @@
 <!-- HOME PAGE RETURN SCRIPT -->
 <script>
     $("#home").click(function () {
-        window.location.href = "http://localhost:3000/lobby/<%- pseudo %>"
+        window.location.href = "http://ceihm-emotions.herokuapp.com/lobby/<%- pseudo %>"
     });
 </script>
