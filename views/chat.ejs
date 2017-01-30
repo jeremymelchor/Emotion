@@ -51,63 +51,75 @@
                         <div class="row">
                             <div class="col-xs-6 col-md-4">
                                 <a href="#" class="thumbnail emote-selection">
-                                    <img src="../images/emotes/a-content1.png" alt="content" style="width: 30px; height: 30px;">
+                                    <img src="../images/emotes/a-content1.png" alt="content"
+                                         style="width: 30px; height: 30px;">
                                 </a>
                             </div>
                             <div class="col-xs-6 col-md-4">
                                 <a href="#" class="thumbnail emote-selection">
-                                    <img src="../images/emotes/a-content2.png" alt="content" style="width: 30px; height: 30px;">
+                                    <img src="../images/emotes/a-content2.png" alt="content"
+                                         style="width: 30px; height: 30px;">
                                 </a>
                             </div>
                             <div class="col-xs-6 col-md-4">
                                 <a href="#" class="thumbnail emote-selection">
-                                    <img src="../images/emotes/a-content4.png" alt="content" style="width: 30px; height: 30px;">
+                                    <img src="../images/emotes/a-content4.png" alt="content"
+                                         style="width: 30px; height: 30px;">
                                 </a>
                             </div>
                             <div class="col-xs-6 col-md-4">
                                 <a href="#" class="thumbnail emote-selection">
-                                    <img src="../images/emotes/a-content5.png" alt="content" style="width: 30px; height: 30px;">
+                                    <img src="../images/emotes/a-content5.png" alt="content"
+                                         style="width: 30px; height: 30px;">
                                 </a>
                             </div>
                             <div class="col-xs-6 col-md-4">
                                 <a href="#" class="thumbnail emote-selection">
-                                    <img src="../images/emotes/a-content6.png" alt="content" style="width: 30px; height: 30px;">
+                                    <img src="../images/emotes/a-content6.png" alt="content"
+                                         style="width: 30px; height: 30px;">
                                 </a>
                             </div>
 
                             <div class="col-xs-6 col-md-4">
                                 <a href="#" class="thumbnail emote-selection">
-                                    <img src="../images/emotes/a-colere.png" alt="colere" style="width: 30px; height: 30px;">
+                                    <img src="../images/emotes/a-colere.png" alt="colere"
+                                         style="width: 30px; height: 30px;">
                                 </a>
                             </div>
                             <div class="col-xs-6 col-md-4">
                                 <a href="#" class="thumbnail emote-selection">
-                                    <img src="../images/emotes/a-degout.png" alt="degout" style="width: 30px; height: 30px;">
+                                    <img src="../images/emotes/a-degout.png" alt="degout"
+                                         style="width: 30px; height: 30px;">
                                 </a>
                             </div>
                             <div class="col-xs-6 col-md-4">
                                 <a href="#" class="thumbnail emote-selection">
-                                    <img src="../images/emotes/a-peur.png" alt="peur" style="width: 30px; height: 30px;">
+                                    <img src="../images/emotes/a-peur.png" alt="peur"
+                                         style="width: 30px; height: 30px;">
                                 </a>
                             </div>
                             <div class="col-xs-4 col-md-4">
                                 <a href="#" class="thumbnail emote-selection">
-                                    <img src="../images/emotes/a-surprise.png" alt="surprise" style="width: 30px; height: 30px;">
+                                    <img src="../images/emotes/a-surprise.png" alt="surprise"
+                                         style="width: 30px; height: 30px;">
                                 </a>
                             </div>
                             <div class="col-xs-4 col-md-4">
                                 <a href="#" class="thumbnail emote-selection">
-                                    <img src="../images/emotes/a-surprise2.png" alt="surprise" style="width: 30px; height: 30px;">
+                                    <img src="../images/emotes/a-surprise2.png" alt="surprise"
+                                         style="width: 30px; height: 30px;">
                                 </a>
                             </div>
                             <div class="col-xs-4 col-md-4">
                                 <a href="#" class="thumbnail emote-selection">
-                                    <img src="../images/emotes/a-triste.png" alt="triste" style="width: 30px; height: 30px;">
+                                    <img src="../images/emotes/a-triste.png" alt="triste"
+                                         style="width: 30px; height: 30px;">
                                 </a>
                             </div>
                             <div class="col-xs-4 col-md-4">
                                 <a href="#" class="thumbnail emote-selection">
-                                    <img src="../images/emotes/a-triste2.png" alt="triste" style="width: 30px; height: 30px;">
+                                    <img src="../images/emotes/a-triste2.png" alt="triste"
+                                         style="width: 30px; height: 30px;">
                                 </a>
                             </div>
                         </div>
@@ -139,163 +151,163 @@
 </html>
 
 <script>
-	let socket = io();
-	let pseudo = <%- JSON.stringify(pseudo) %>;
-	let room = <%- JSON.stringify(room) %>;
-	let emote_to_send;
+    let socket = io();
+    let pseudo = <%- JSON.stringify(pseudo) %>;
+    let room = <%- JSON.stringify(room) %>;
+    let emote_to_send;
 
-	socket.emit('joinRoom', {room: room, pseudo: pseudo});
+    socket.emit('joinRoom', {room: room, pseudo: pseudo});
 
-	/**
-	 * SEND BUTTON
-	 */
-	$('#send').click(function () {
-		if ($('#message').val() != "") {
-			socket.emit('chat message', {
-				message: $('#message').val(),
-				pseudo: pseudo,
-				room: room,
-				emote: emote_to_send
-			});
-			$('#message').val('');
-			$("#chatBlock").scrollTop($("#chatBlock")[0].scrollHeight + 1000);
-		}
-	});
+    /**
+     * SEND BUTTON
+     */
+    $('#send').click(function () {
+        if ($('#message').val() != "") {
+            socket.emit('chat message', {
+                message: $('#message').val(),
+                pseudo: pseudo,
+                room: room,
+                emote: emote_to_send
+            });
+            $('#message').val('');
+            $("#chatBlock").scrollTop($("#chatBlock")[0].scrollHeight + 1000);
+        }
+    });
 
-	/**
-	 * PRESS ENTER TO SEND MESSAGE
-	 */
-	$(document).keypress(function (e) {
-		if (e.which == 13) {
-			$("#send").click();
-			$("#chatBlock").scrollTop($("#chatBlock")[0].scrollHeight + 1000);
-		}
-	});
+    /**
+     * PRESS ENTER TO SEND MESSAGE
+     */
+    $(document).keypress(function (e) {
+        if (e.which == 13) {
+            $("#send").click();
+            $("#chatBlock").scrollTop($("#chatBlock")[0].scrollHeight + 1000);
+        }
+    });
 
 
-	/**
-	 * SOCKET
-	 */
-	socket.on('chat message', res => {
-		console.log('chat message');
-		console.log(res.pseudo);
-		console.log(res.message);
-		let urlEmote = res.emote;
-		//pour le float left ou right du message, on modifie la class CSS qui affiche le message
-		let messageDisplayClass = "message-content";
-		let pseudoDisplayClass = "pseudo";
+    /**
+     * SOCKET
+     */
+    socket.on('chat message', res => {
+        console.log('chat message');
+        console.log(res.pseudo);
+        console.log(res.message);
+        let urlEmote = res.emote;
+        //pour le float left ou right du message, on modifie la class CSS qui affiche le message
+        let messageDisplayClass = "message-content";
+        let pseudoDisplayClass = "pseudo";
 
-		if (res.pseudo == pseudo) {
-			messageDisplayClass = "message-content-mine";
-			pseudoDisplayClass = "pseudo-mine";
-			console.log('MON MESSAGE')
-			console.log("-----------------------\n");
-		}
-		$('#messages')
-			.append($('<li class="' + pseudoDisplayClass + '">')
-				.text(`${res.pseudo}  `).append($('<img src="' + urlEmote + '" alt="emote" style="width:30px;height:30px;">')))
-			.append($('<li class="bubble ' + messageDisplayClass + '">').text(`${res.message}`));
+        if (res.pseudo == pseudo) {
+            messageDisplayClass = "message-content-mine";
+            pseudoDisplayClass = "pseudo-mine";
+            console.log('MON MESSAGE')
+            console.log("-----------------------\n");
+        }
+        $('#messages')
+            .append($('<li class="' + pseudoDisplayClass + '">')
+                .text(`${res.pseudo}  `).append($('<img src="' + urlEmote + '" alt="emote" style="width:30px;height:30px;">')))
+            .append($('<li class="bubble ' + messageDisplayClass + '">').text(`${res.message}`));
 
-		$("#chatBlock").scrollTop($("#chatBlock")[0].scrollHeight + 1000);
-	});
+        $("#chatBlock").scrollTop($("#chatBlock")[0].scrollHeight + 1000);
+    });
 
-	socket.on('user joined', res => {
-		$('#messages').append($('<li>').text(`${res.pseudo} joined !`));
-	});
+    socket.on('user joined', res => {
+        $('#messages').append($('<li>').text(`${res.pseudo} joined !`));
+    });
 
-	// Fired when the server see someone login in
-	socket.on('list users', list => {
-		let htmlUserList = "";
-		for (let user of list) {
-			if (user != pseudo)
-				htmlUserList += `<li style="margin-top: 5px;margin-left: 5px;">`
-					+ `<div class="cust-tooltip">`
-					+ `<button type="button" class="btn btn-danger" aria-label="Left Align" data-toggle="tooltip" title="Signaler">`
-					+ `Signaler`
-					+ `</button><span class="cust-tooltiptext">Signaler</span></div> ${user}`
-					+ `   <img src="` + randomEmote().url + `" alt="emote" style="width:25px;height:25px;">`
-					+ `   <button id="mute${user}" type="button" class="btn btn-default" data-toggle="tooltip"  title="mute/unmute emotion" onclick="muteToggle('${user}');">`
-					+ `<img src="../images/emotes/a-content1.png" alt="emote" style="width:20px;height:20px;">   <span id="mute-glyph${user}" class="glyphicon glyphicon-remove" aria-hidden="true" style="color: red"></span></button>`
-					+ `</li>`;
-			else
-				htmlUserList += `<li style="margin-top: 5px;margin-left: 5px;">`
-					+ `${user}`
-					+ `   <img id="user-state" src="` + randomEmote().url + `" alt="emote" style="width:25px;height:25px;">`
-					+ `</li>`;
-		}
-		$('#users').html(htmlUserList);
-	});
+    // Fired when the server see someone login in
+    socket.on('list users', list => {
+        let htmlUserList = "";
+        for (let user of list) {
+            if (user != pseudo)
+                htmlUserList += `<li style="margin-top: 5px;margin-left: 5px;">`
+                    + `<div class="cust-tooltip">`
+                    + `<button type="button" class="btn btn-danger" aria-label="Left Align" data-toggle="tooltip" title="Signaler">`
+                    + `<span class="glyphicon glyphicon-alert" aria-hidden="true"></span>`
+                    + `</button><span class="cust-tooltiptext">Signaler</span></div> ${user}`
+                    + `   <img src="` + randomEmote().url + `" alt="emote" style="width:25px;height:25px;">`
+                    + `   <button id="mute${user}" type="button" class="btn btn-default" data-toggle="tooltip"  title="mute/unmute emotion" onclick="muteToggle('${user}');"><span class="cust-tooltiptext">Bloquer la diffusion des émotions à cet utilisateur</span>`
+                    + `<img src="../images/emotes/a-content1.png" alt="emote" style="width:20px;height:20px;">   <span id="mute-glyph${user}" class="glyphicon glyphicon-remove" aria-hidden="true" style="color: red"></span></button>`
+                    + `</li>`;
+            else
+                htmlUserList += `<li style="margin-top: 5px;margin-left: 5px;">`
+                    + `${user}`
+                    + `   <img id="user-state" src="` + randomEmote().url + `" alt="emote" style="width:25px;height:25px;">`
+                    + `</li>`;
+        }
+        $('#users').html(htmlUserList);
+    });
 
-	socket.on('user left', res => {
-		//console.log(res);
-		$('#messages').append($('<li>').text(`${res} left.`));
-	});
+    socket.on('user left', res => {
+        //console.log(res);
+        $('#messages').append($('<li>').text(`${res} left.`));
+    });
 
-	/**
-	 * BACK TO LOBBY
-	 **/
+    /**
+     * BACK TO LOBBY
+     **/
 
-	var goback = function () {
-		socket.emit('disconnection', {room: room, pseudo: pseudo});
-		window.location.href = "https://ceihm-emotions.herokuapp.com/lobby/<%- pseudo %>"
-	}
+    var goback = function () {
+        socket.emit('disconnection', {room: room, pseudo: pseudo});
+        window.location.href = "https://ceihm-emotions.herokuapp.com/lobby/<%- pseudo %>"
+    }
 
-	/**
-	 * RANDOM EMOTE URL GENERATOR
-	 */
-	let randomEmote = function () {
-		let url = "";
-		let emojiTooltip = "";
-		switch (Math.floor(Math.random() * (6 - 1 + 1)) + 1) {
-			case 1:
-				url = "../images/emotes/a-colere.png"
-				emojiTooltip = "colere";
-				break;
-			case 2:
-				url = "../images/emotes/a-content.png"
-				emojiTooltip = "colere";
-				break;
-			case 3:
-				url = "../images/emotes/a-degout.png"
-				emojiTooltip = "colere";
-				break;
-			case 4:
-				url = "../images/emotes/a-peur.png"
-				emojiTooltip = "colere";
-				break;
-			case 5:
-				url = "../images/emotes/a-surprise.png"
-				emojiTooltip = "colere";
-				break;
-			case 6:
-				url = "../images/emotes/a-triste.png"
-				emojiTooltip = "colere";
-				break;
-			default:
-				console.log("default");
-				break;
-		}
-		return {url, emojiTooltip};
-	}
+    /**
+     * RANDOM EMOTE URL GENERATOR
+     */
+    let randomEmote = function () {
+        let url = "";
+        let emojiTooltip = "";
+        switch (Math.floor(Math.random() * (6 - 1 + 1)) + 1) {
+            case 1:
+                url = "../images/emotes/a-colere.png"
+                emojiTooltip = "colere";
+                break;
+            case 2:
+                url = "../images/emotes/a-content.png"
+                emojiTooltip = "colere";
+                break;
+            case 3:
+                url = "../images/emotes/a-degout.png"
+                emojiTooltip = "colere";
+                break;
+            case 4:
+                url = "../images/emotes/a-peur.png"
+                emojiTooltip = "colere";
+                break;
+            case 5:
+                url = "../images/emotes/a-surprise.png"
+                emojiTooltip = "colere";
+                break;
+            case 6:
+                url = "../images/emotes/a-triste.png"
+                emojiTooltip = "colere";
+                break;
+            default:
+                console.log("default");
+                break;
+        }
+        return {url, emojiTooltip};
+    }
 
-	/**
-	 * MUTE ACTION
-	 */
-	let muteToggle = function (user) {
-		if ($('#mute-glyph' +user).hasClass("glyphicon-remove")) {
-			$('#mute-glyph'+user).removeClass("glyphicon-remove").addClass("glyphicon-ok").css("color","green");
-		} else {
-			$('#mute-glyph'+user).removeClass("glyphicon-ok").addClass("glyphicon-remove").css("color","red");
-		}
-	}
+    /**
+     * MUTE ACTION
+     */
+    let muteToggle = function (user) {
+        if ($('#mute-glyph' + user).hasClass("glyphicon-remove")) {
+            $('#mute-glyph' + user).removeClass("glyphicon-remove").addClass("glyphicon-ok").css("color", "green");
+        } else {
+            $('#mute-glyph' + user).removeClass("glyphicon-ok").addClass("glyphicon-remove").css("color", "red");
+        }
+    }
 
-	/**
-	 * CURRENT EMOTION RANDOMIZER
-	 */
+    /**
+     * CURRENT EMOTION RANDOMIZER
+     */
 
-	let countdown = 20;
-	$('#current-emote').attr('src', randomEmote().url);
-	emote_to_send = $('#current-emote').attr('src');
+    let countdown = 20;
+    $('#current-emote').attr('src', randomEmote().url);
+    emote_to_send = $('#current-emote').attr('src');
 
     /*$('#message').keypress(function () {
      if (countdown == 0) {
@@ -307,32 +319,32 @@
      }
      });*/
 
-	/**
-	 * MODAL OPEN
-	 */
+    /**
+     * MODAL OPEN
+     */
 
-	$('#change-emoji').click(function () {
-		$('#myModal').show();
-	});
+    $('#change-emoji').click(function () {
+        $('#myModal').show();
+    });
 
-	$('.emote-selection').click(function (e) {
-		//si on a cliqué sur le <a>
-		if ($(e.target).is("a")) {
-			$('#current-emote').attr('src', $(e.target).children("img").attr('src'));
-			$('#user-state').attr('src', $(e.target).children("img").attr('src'));
+    $('.emote-selection').click(function (e) {
+        //si on a cliqué sur le <a>
+        if ($(e.target).is("a")) {
+            $('#current-emote').attr('src', $(e.target).children("img").attr('src'));
+            $('#user-state').attr('src', $(e.target).children("img").attr('src'));
 
-			emote_to_send = $(e.target).children("img").attr('src');
-			console.log(emote_to_send);
+            emote_to_send = $(e.target).children("img").attr('src');
+            console.log(emote_to_send);
 
-		}//si cest sur <img>
-		else if ($(e.target).is("img")) {
-			$('#current-emote').attr('src', $(e.target).attr('src'));
-			$('#user-state').attr('src', $(e.target).attr('src'));
-			emote_to_send = $(e.target).attr('src');
-			console.log(emote_to_send);
+        }//si cest sur <img>
+        else if ($(e.target).is("img")) {
+            $('#current-emote').attr('src', $(e.target).attr('src'));
+            $('#user-state').attr('src', $(e.target).attr('src'));
+            emote_to_send = $(e.target).attr('src');
+            console.log(emote_to_send);
 
-		}
-	});
+        }
+    });
 
 
 </script>
