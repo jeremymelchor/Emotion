@@ -226,9 +226,9 @@
                     + `<span class="glyphicon glyphicon-alert" aria-hidden="true"></span>`
                     + `</button><span class="cust-tooltiptext">Signaler</span></div> ${user}`
                     + `   <img src="` + randomEmote().url + `" alt="emote" style="width:25px;height:25px;">`
-                    + `   <button id="mute${user}" type="button" class="btn btn-default" data-toggle="tooltip"  title="mute/unmute emotion" onclick="muteToggle('${user}');">`
+                    + `   <button id="mute${user}" type="button" class="btn btn-default" data-toggle="tooltip"  title="Bloquer partage des émotions avec cette personne" onclick="muteToggle('${user}');">`
                     + `<img src="../images/emotes/a-content1.png" alt="emote" style="width:20px;height:20px;">   <span id="mute-glyph${user}" class="glyphicon glyphicon-remove" aria-hidden="true" style="color: red"></span></button>`
-                    + `<span class="cust-tooltiptext">Bloquer la diffusion des émotions à cet utilisateur</span></li>`;
+                    + `</li>`;
             else
                 htmlUserList += `<li style="margin-top: 5px;margin-left: 5px;">`
                     + `${user}`
@@ -264,7 +264,7 @@
                 emojiTooltip = "colere";
                 break;
             case 2:
-                url = "../images/emotes/a-content.png"
+                url = "../images/emotes/a-content1.png"
                 emojiTooltip = "colere";
                 break;
             case 3:
